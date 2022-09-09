@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container d-flex justify-content-between align-items-start mt-5">
+        <div class="col-4 p-3">
+            <div class="wrapper d-flex justify-content-between align-items-center">
+                <h2>New Author</h2>
+                <a href="/books" class="btn btn-primary">Add a Book</a>
+            </div>
+            <form action="/authors/new" method="post">
+                <div class="form-row align-items center">
+                    <label for="name" class="form-label">Name: </label>
+                    <input type="text" name="name" id="name" class="form-control">
+                </div>
+                <input type="submit" value="Create" class="btn btn-primary mt-3">
+            </form>
+        </div>
+        <div class="col-4 p-3">
+            <h2>All Authors</h2>
+            <ul class="list-group mt-3">
+                {% for author in authors %}
+                    <a href="#" class="list-group-item list-group-item-action">{{author.name}}</a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

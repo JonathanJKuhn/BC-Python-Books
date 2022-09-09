@@ -1,0 +1,9 @@
+body {
+    background-color: #ddd;
+}
+
+.col-4 {
+    background-color: #333;
+    color: #fff;
+    border-radius: 10px;
+}
