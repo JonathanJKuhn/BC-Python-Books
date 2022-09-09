@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container d-flex justify-content-between align-items-start mt-5">
+        <div class="col-auto p-3">
+            <div class="wrapper d-flex justify-content-between align-items-center">
+                <h2>{{author.name}}'s Favorites</h2>
+                <a href="/" class="btn btn-primary ms-3">Home</a>
+            </div>
+            <table class="table table-light table-striped mt-3 rounded rounded-3 overflow-hidden">
+                <thead>
+                    <th scope="col">Title</th>
+                    <th scope="col"># of Pages</th>
+                </thead>
+                <tbody>
+                    {% for favorite in author.favorites %}
+                        <tr>
+                            <td>{{favorite.title}}</td>
+                            <td>{{favorite.num_of_pages}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-4 p-3">
+            <h2>Add Author's Favorite</h2>
+            <form action="/authors/{{author.id}}/favorite" method="post">
+                <div class="form-group mt-3">
+                    <label for="book">Book: </label>
+                    <select name="book" id="book" class="form-select">
+                    {% for unfavorite in unfavorites %}
+                        <option value="{{unfavorite.id}}">{{unfavorite.title}}</option>
+                    {% endfor %}
+                </select>
+                </div>
+                <input type="submit" value="Add" class="btn btn-primary mt-3">
+            </form>
+        </div>
+    </div>
+{% endblock %}

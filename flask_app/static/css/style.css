@@ -2,7 +2,7 @@ body {
     background-color: #ddd;
 }
 
-.col-4 {
+.col-auto, .col-4, .col-5 {
     background-color: #333;
     color: #fff;
     border-radius: 10px;
