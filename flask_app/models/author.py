@@ -9,6 +9,14 @@ class Author:
         self.updated_at = db_data['updated_at']
         self.favorites = []
 
+    def __repr__(self):
+        return (
+            f'id: {self.id}\n'
+            f'name: {self.name}\n'
+            f'created_at: {self.created_at}\n'
+            f'updated_at: {self.updated_at}\n'
+        )
+
     @staticmethod
     def add(data):
        query = "INSERT INTO authors (name) VALUES (%(name)s);"
@@ -36,22 +44,11 @@ class Author:
             author.favorites.append(book.Book(favorite))
 
         # Get non-favorites
-        unfav_query = "SELECT books.id, books.title, books.num_of_pages, books.created_at, books.updated_at, favorites.author_id FROM books LEFT JOIN favorites ON books.id = book_id;"
-        unfav_res = connectToMySQL('books_schema').query_db(unfav_query)
+        unfav_query = "SELECT * FROM books WHERE books.id NOT IN (SELECT book_id FROM favorites WHERE author_id = %(id)s);"
+        unfav_res = connectToMySQL('books_schema').query_db(unfav_query, data)
         unfav_list = []
         for unfavorite in unfav_res:
-            if unfavorite['author_id'] != data['id']:
-                if len(unfav_list) == 0:
-                    unfav_list.append(book.Book(unfavorite))
-                else:
-                    isInList = False
-                    for item in unfav_list:
-                        if item.id == unfavorite['id']:
-                            isInList = True
-                    if isInList == False:
-                        unfav_list.append(book.Book(unfavorite))
-                    else:
-                        isInList = False
+            unfav_list.append(book.Book(unfavorite))    
         
         return [author, unfav_list]
 
